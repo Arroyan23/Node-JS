@@ -1,95 +1,57 @@
-// // // agar bisa ditampilkan ke server
-// // // menggunakan metode create server
-// const http = require("http");
-// const fs = require("fs");
-
-// // req apa yang dikirimkan oleh server
-// // apa yang di respon
-// // namun ada cara untuk menampilkan si node js dengan html
-
-// const renderServer = (path, res) => {
-//   fs.readFile(`./public/${path}`, (err, data) => {
-//     if (err) {
-//       res.writeHead(404);
-//       res.write("Sorry Page Req not Found");
-//     } else {
-//       res.write(data);
-//     }
-//     res.end();
-//   });
-// };
-
-// const server = http.createServer((req, res) => {
-//   // url adalah apa yang dituliskan setelah nama localhost
-//   // localhost:3000/about maka urlnya /about
-//   const url = req.url;
-//   res.writeHead(200, {
-//     "Content-Type": "text/html",
-//   });
-
-//   switch (url) {
-//     case "/about":
-//       renderServer("about.html", res);
-//       break;
-//     case "/contact":
-//       renderServer("contact.html", res);
-//       break;
-//     default:
-//       renderServer("index.html", res);
-//       break;
-//   }
-// });
-// // atau bisa chaining sehingga tidak perlu buat variabel
-// server.listen(3000, () => {
-//   console.log("Server is Listening on port 3000");
-// });
-
 // MENGGUNAKAN EXPRESS JS YANG LEBIH SIMPLE
 
 // lebih mudah digunakan
 import express from "express";
+import expressLayouts from "express-ejs-layouts";
 const app = express();
 const port = 3000;
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-// route nya tidak bisa sembarang
+app.set("view engine", "ejs");
+app.use(expressLayouts);
 
-function renderServer(path) {}
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  // bisa mengirimkan data ke halaman index.ejs
+  const mahasiswaDinamakan = [
+    {
+      nama: "Favian Rasyad",
+      hobby: "Membunuh Dirinya Sendiri",
+    },
+    {
+      nama: "Sammy Muchammad",
+      hobby: "Membunuh Favian Rasyad",
+    },
+    {
+      nama: "Azzam Wartaputra",
+      hobby: "Membunuh Binatang dan Memakan Favian Rasyad",
+    },
+  ];
+  res.render("index", {
+    layout: "layouts/main-layout",
+    nama: "Ahmad Syawqi Arroyan",
+    mahasiswaDinamakan,
+    title: "Halaman Home",
+  });
+});
+app.get("/contact", (req, res) => {
+  // bisa lebih simple pemakaian untuk mendapatkan file dari folder views
+  // fitur ejsnya bisa di eksplor lebih di dalam ejs dokumentasi
+  res.render("contact", {
+    layout: "layouts/main-layout",
+    title: "Halaman Contact",
+  });
 });
 
-app.get("/coba", (req, res) => {
-  //   res.json({
-  //     nama: "Favian Bunuh Diri",
-  //     email: "favianmembunuhdirinya@gmail.com",
-  //     noHp: "081218012006",
-  //   });
-  res.sendFile("./public/contact.html", { root: __dirname });
-});
+// bisa menambahkan variabel yang nantinya disimpan di html
+// sekarang ke file .ejs
 
+// bisa mengirimkan variabel ke layout yang dibuat oleh kita sendiri
 app.get("/about", (req, res) => {
-  res.sendFile("./public/about.html", { root: __dirname });
+  // dengan memberikan nama object maka dibagian body akan otomatis memasukkan bagian yang dituju
+  res.render("about", {
+    layout: "layouts/main-layout",
+    title: "Halaman About",
+  });
 });
-
-// bisa mendapatkan id usernya
-// jadi req.params mendapatkan apa yang ada di dalam http
-// req query untuk ambil variabel setelah tanda tanya
-// jadi di websitemua product/20?category=shoes
-// maka di req.query.category akan keluar tulisan shoes
-app.get("/product/:id", (req, res) => {
-  res.send(
-    "Product ID : " + req.params.id + "<br>Category ID : " + req.query.category
-  );
-});
-
-// use method untuk menjalankan middleware
-// ini jangan di simpan di atas karena awalnya yang dijalankan bagian yang use ini
-// sehingga ini digunakan untuk menangani jika tidak ada req nya di dalam
-// halaman tersebut
 
 // Request adalah apa yang dikirimkan oleh res
 app.use("/", (req, res) => {
