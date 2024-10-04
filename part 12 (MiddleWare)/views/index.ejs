@@ -1,0 +1,15 @@
+<!-- ini juga akan masuk ke dalam main-layout di bagian body -->
+
+<h1>Ini adalah bagian Home</h1>
+<h3>Data-Data Mahasiswa</h3>
+<h2>Data Data Mahasiswa</h2>
+<!-- ingat jika ingin memanggil variabel maka harus dipanggil dengan syntax ejs yang berbeda -->
+<!-- dengan memaka sama dengan -->
+<% mahasiswaDinamakan.forEach(mhs => { %>
+<ul>
+  <li>Nama : <%= mhs.nama %></li>
+  <li>Hobby : <%= mhs.hobby %></li>
+</ul>
+<% }) %>
+
+<!-- menggunakan looping untuk mahasiswa -->
