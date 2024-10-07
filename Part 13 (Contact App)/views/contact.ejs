@@ -1,4 +1,11 @@
 <h1>Hello <%= nav %></h1>
+<a href="/data/add" class="btn btn-primary">Tambahkan Data</a>
+<!-- tambahkan fungsi jika berhasil -->
+ <% if (flash.length !== 0) { %>
+  <div class="alert alert-success mt-3" role="alert">
+    <%= flash %>
+  </div>
+ <% } %>
 <table class="table">
   <thead>
     <tr>

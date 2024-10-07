@@ -27,7 +27,44 @@ function detailContacts(nama) {
   return contact;
 }
 
+// menambahkan fungsi tambah di form untuk data dan sebagainya
+// menulis ulang data yang ada di json
+const tulisData = (contact) => {
+  fs.writeFileSync("data/favian.json", JSON.stringify(contact));
+};
+
+const addContact = (contact) => {
+  // masukkan ke dalam file json
+  // baca dulu file jsonnya
+  const contacts = loadFavianJSON();
+  contacts.push(contact);
+  tulisData(contacts);
+};
+
+const cekDuplikat = (nama) => {
+  // tangkap array di dalam json
+  const contacts = loadFavianJSON();
+  const temukan = contacts.find((contact) => contact.nama === nama);
+  return temukan;
+};
+
+// berhasil membuat fungsi delette
+// membuat fungsi delete
+const deleteContact = (nama) => {
+  // temukan dulu nama yang ada di dalam contact delete
+  const contacts = loadFavianJSON();
+  const filterDelete = contacts.filter((element) => element.nama != nama);
+  // masukkan filter delete ke dalam tlis data
+  tulisData(filterDelete);
+};
+
+// membuat fungsi untuk meng update datanya
+
+
 module.exports = {
   loadFavianJSON,
   detailContacts,
+  addContact,
+  cekDuplikat,
+  deleteContact,
 };
