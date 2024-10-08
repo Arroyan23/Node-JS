@@ -184,6 +184,7 @@ app.get("/data/add", (req, res) => {
 app.get("/data/:nama", (req, res) => {
   const ambilFiles = contact.detailContacts(req.params.nama);
   // kirimkan datanya ke halaman html dengan
+  // ubah jadi async dulu karena bentuknya promiswe
   res.render("menu", {
     layout: "layouts/main-layout.ejs",
     nav: "Data Favian",

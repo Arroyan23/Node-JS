@@ -1,0 +1,37 @@
+<h1>Hello <%= nav %></h1>
+<a href="/data/add" class="btn btn-primary">Tambahkan Data</a>
+<!-- tambahkan fungsi jika berhasil -->
+ <% if (flash.length !== 0) { %>
+  <div class="alert alert-success mt-3" role="alert">
+    <%= flash %>
+  </div>
+ <% } %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- sehingga jika contact belum ada sama sekali maka akan menimbulkan alert -->
+     <!-- dan ada link untuk menambahkan contact -->
+    <% if (dataContact.length === 0) { %>
+        <div class="alert alert-danger" role="alert">
+            Belom Ada Data Di contact<a href="#" class="alert-link">Tambah Contact</a>.
+          </div>
+    <% } %>
+
+    <% dataContact.forEach((element, index) => { %>
+        <tr>
+            <th scope="row"><%= index + 1 %></th>
+            <td><%= element.nama %></td>
+            <td><%= element.nohp %></td>
+            <td><a class="btn btn-primary badge rounded-pill" href="data/<%= element.nama %>">Details</a></td>
+          </tr>
+    <% }) %>
+    </tr>
+  </tbody>
+</table>
